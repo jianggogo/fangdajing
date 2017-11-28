@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+	</head>
+	<style type="text/css">
+		#mind{
+			width: 400px;
+			height: 400px;
+			border: 1px solid;
+			position: absolute;
+			top: 10px;
+			left: 10px;
+			overflow: hidden;
+			}
+		#smol{
+			width: 200px;
+			height: 200px;
+			background: brown;
+			opacity: .3;
+			position: absolute;
+			top: 0;
+			left: 1;
+			display: none;
+		}
+		#big{
+			width: 400px;
+			height: 400px;
+			border: 1px solid;
+			float: left;
+			overflow: hidden;
+			position:absolute;
+			top: 10px;
+			left:450px;
+			display: none;
+		}
+		#big_img{
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+		#min_img{
+			width: 400px;
+			height: 400px;
+		}
+	</style>
+	<body>
+		<div id="mind">
+			<img src="img/middle.jpg" id="min_img"/>
+			<div id="smol">
+				
+			</div>
+		</div>
+		
+		<div id="big">
+			<img src="img/big.jpg" id="big_img"/>
+		</div>
+		
+		
+		
+		<script src="js/tools.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			var smol_width = outerWidth($("#smol")),
+				smol_height = outerHeight($("#smol")),
+				mind_width = innerWidth($("#mind")),
+				mind_height = innerHeight($("#mind"));
+				
+			
+			//鼠标移入移出 显示和隐藏
+			$("#mind").onmouseenter = function(){
+				
+				show($("#big"));
+				show($("#smol"));
+			}
+			$("#mind").onmouseleave = function(){
+				hide($("#big"));
+				hide($("#smol"));
+			}
+			// 鼠标移动事件
+			$("#mind").onmousemove = function(e){
+				e = e||event;
+				offset($("#smol"),{
+					top:page(e).y - smol_height/2,
+					left:page(e).x - smol_width/2
+				})
+				//获取smol在父元素中的定位
+				var _top = $("#smol").offsetTop,
+					_left = $("#smol").offsetLeft;
+				
+				if ( _top <= 0) 
+					_top = 0;
+				else if(_top>=mind_height - smol_height )
+					_top = mind_height - smol_height;
+					
+					if(_left<= 0 )
+					_left = 0;
+					else if(_left>=mind_width - smol_width)
+						_left=mind_width - smol_width;
+						
+					
+					
+				$("#smol").style.top = _top + "px"
+				$("#smol").style.left = _left + "px"
+				
+				$("#big_img").style.top = -2 * _top +"px";
+				$("#big_img").style.left = -2 * _left+"px";
+				
+				
+			}
+			
+			
+		</script>
+	</body>
+</html>
